@@ -247,6 +247,13 @@ namespace steem { namespace protocol {
          FC_ASSERT( fc::is_utf8( url ), "URL is not valid UTF8" );
       }
 
+      if( props.contains( "1765-account-subsidy-limit" ) )
+      {
+         ++property_count;
+         uint32_t account_subsidy_limit = props[ "account-subsidy-limit" ].as< uint32_t >();
+         FC_UNUSED( account_subsidy_limit );
+      }
+
       FC_ASSERT( props.size() == property_count, "There are extraneous properties" );
    }
 

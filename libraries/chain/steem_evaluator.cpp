@@ -128,6 +128,7 @@ void witness_set_properties_evaluator::do_apply( const witness_set_properties_op
    bool account_creation_changed = false;
    bool max_block_changed        = false;
    bool sbd_interest_changed     = false;
+   bool account_subsidy_changed  = false;
    bool key_changed              = false;
    bool sbd_exchange_changed     = false;
    bool url_changed              = false;
@@ -148,6 +149,12 @@ void witness_set_properties_evaluator::do_apply( const witness_set_properties_op
    {
       props.sbd_interest_rate = o.props[ "sbd_interest_rate" ].as< uint16_t >();
       sbd_interest_changed = true;
+   }
+
+   if( o.props.contains( "account-subsidy-limit" ) )
+   {
+      FC_ASSERT( _db.has_hardfork( STEEM_HARDFORK_0_20__1765 ) );
+      props.account_subsidy_limit = o.props[ "account-subsidy-limit" ].as< uint32_t >();
    }
 
    if( o.props.contains( "signing_key" ) )
@@ -179,6 +186,9 @@ void witness_set_properties_evaluator::do_apply( const witness_set_properties_op
 
       if( sbd_interest_changed )
          w.props.sbd_interest_rate = props.sbd_interest_rate;
+
+      if( account_subsidy_changed )
+         w.props.account_subsidy_limit = props.account_subsidy_limit;
 
       if( key_changed )
          w.signing_key = signing_key;
