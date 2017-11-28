@@ -6898,6 +6898,37 @@ BOOST_AUTO_TEST_CASE( witness_set_properties_validate )
    FC_LOG_AND_RETHROW()
 }
 
+BOOST_AUTO_TEST_CASE( witness_set_properties_authorities )
+{
+   try
+   {
+      BOOST_TEST_MESSAGE( "Testing: witness_set_properties_authorities" );
+
+      witness_set_properties_operation op;
+      op.owner = "alice";
+      op.current_signing_key = generate_private_key( "key" ).get_public_key();
+
+      flat_set< account_name_type > auths;
+      flat_set< account_name_type > expected;
+
+      op.get_required_owner_authorities( auths );
+      BOOST_REQUIRE( auths == expected );
+
+      op.get_required_active_authorities( auths );
+      BOOST_REQUIRE( auths == expected );
+
+      op.get_required_posting_authorities( auths );
+      BOOST_REQUIRE( auths == expected );
+
+      vector< authority > key_auths;
+      vector< authority > expected_keys;
+      expected_keys.push_back( authority( 1, op.current_signing_key, 1 ) );
+      op.get_required_authorities( key_auths );
+      BOOST_REQUIRE( auths == expected );
+   }
+   FC_LOG_AND_RETHROW()
+}
+
 BOOST_AUTO_TEST_CASE( witness_set_properties_apply )
 {
    try
