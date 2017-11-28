@@ -233,7 +233,7 @@ namespace steem { namespace protocol {
       {
          ++property_count;
          price sbd_exchange_rate = props[ "sbd_exchange_rate" ].as< price >();
-         FC_ASSERT( ( is_asset_type( sbd_exchange_rate.base, STEEM_SYMBOL ) && is_asset_type( sbd_exchange_rate.quote, SBD_SYMBOL ) ),
+         FC_ASSERT( ( is_asset_type( sbd_exchange_rate.base, SBD_SYMBOL ) && is_asset_type( sbd_exchange_rate.quote, STEEM_SYMBOL ) ),
             "Price feed must be a STEEM/SBD price" );
          sbd_exchange_rate.validate();
       }
