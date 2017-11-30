@@ -2492,7 +2492,7 @@ BOOST_AUTO_TEST_CASE( fixture_convert_checks_balance )
    //   balances, see issue #1825
    try
    {
-      set_price_feed( price( ASSET( "1.000 TESTS" ), ASSET( "1.000 TBD" ) ) );
+      set_price_feed( price( ASSET( "1.000 TBD" ), ASSET( "1.000 TESTS" ) ) );
       ACTORS( (dany) )
 
       fund( "dany", 5000 );
